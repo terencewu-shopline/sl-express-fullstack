@@ -10,11 +10,19 @@ const database = {
 
 class NewsController {
   async index(req, res) {
+    const page = req.query.page || 1
+    const limit = req.query.limit || 10
+    const skip = (page - 1) * limit
+
+    const items = Object.values(database).slice(skip, skip + limit)
+    const total = Object.keys(database).length
+
     return res.json({
       pagination: {
-        total: 1,
+        page,
+        total,
       },
-      items: Object.values(database),
+      items,
     })
   }
 

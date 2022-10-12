@@ -162,9 +162,9 @@ export const ButtonGroup = ({ children }) => {
   )
 }
 
-export const Button = ({ type = "default", submit = false, label = "Submit", onClick }) => {
+export const Button = ({ type = "default", submit = false, label = "Submit", onClick, loading = false }) => {
   return (
-    <AButton type={type} htmlType={submit ? "submit" : "button"} onClick={onClick}>
+    <AButton type={type} htmlType={submit ? "submit" : "button"} onClick={onClick} loading={loading}>
       { label }
     </AButton>
   );

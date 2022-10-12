@@ -1,29 +1,36 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import fetch from "../utils/fetch";
 
-const useRequest = (url, opts = {}) => {
+const useRequest = (url, { manual = false, then, catch: _catch, ...opts } = {}) => {
     const [payload, setPayload] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
-    const makeRequest = async () => {
+    const makeRequest = async (body) => {
         setLoading(true)
         try {
-            const res = await fetch(url, opts)
+            const res = await fetch(url, {
+                body: body ? JSON.stringify(body) : undefined,
+                ...opts,
+            })
             const payload = await res.json()
             setPayload(payload)
+            then?.(res)
+        } catch(e) {
+            _catch?.(e)
         } finally {
             setLoading(false)
         }
     }
 
     useEffect(() => {
-        makeRequest()
-    }, [url])
+        !manual ? makeRequest() : null
+    }, [manual, url])
 
     return {
         payload,
         loading,
-        reload: makeRequest,
+        reload: () => makeRequest(), // by default no body passed
+        call: makeRequest,
     }
 }
 

@@ -9,10 +9,11 @@ import { ActionLink } from "../utils/action-link";
 
 
 const NewsListPage = () => {
+  const PAGE_SIZE = 2;
   const [page, setPage] = useState(1);
 
   const { payload, loading, reload } = useRequest(`/api/news?${qs.stringify({
-    limit: 10,
+    limit: PAGE_SIZE,
     page,
   })}`)
 
@@ -52,7 +53,7 @@ const NewsListPage = () => {
         dataSource={payload.items}
         pagination={{
           total: payload?.pagination?.total,
-          pageSize: 10,
+          pageSize: PAGE_SIZE,
           showSizeChanger: false,
           current: page,
           onChange: (page) => setPage(page)

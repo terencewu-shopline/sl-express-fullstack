@@ -11,31 +11,26 @@ const NewsShowPage = () => {
   const { payload, loading, reload } = useRequest(`/api/news/${id}`)
   const navigate = useNavigate()
 
-  const onSubmit = async (values) => {
-    try {
-      const res = await fetch(`/api/news/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
-
-      const json = await res.json()
-
+  const updateNews = useRequest(`/api/news/${id}`, {
+    manual: true,
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    then: (res) => {
       if (res.status > 400) {
-        // message.error(json.message);
+        message.error(json.message);
       } else {
         message.success('Success')
       }
-      console.log(json)
-      await reload()
-    } catch (e) {
+
+      navigate('/')
+    },
+    catch: (e) => {
       console.log(e)
       message.error('Unknown Error');
     }
-  };
-
+  })
 
   if (loading) {
     return <div className="c-spinner"><Spin size="large"/></div>
@@ -44,12 +39,12 @@ const NewsShowPage = () => {
   return (
     <div>
       <h1>News Show</h1>
-      <Form initialValues={payload} onFinish={onSubmit}>
+      <Form initialValues={payload} onFinish={updateNews.call}>
         <Field name="title" label="Title" />
         <Field name="body" label="Body" type="textarea" row={10} showCount maxLength={100} />
 
         <ButtonGroup>
-          <Button type="primary" submit={true} />
+          <Button type="primary" submit={true} loading={updateNews.loading} />
           <Button onClick={() => navigate(-1)} label="Back" />
         </ButtonGroup>
       </Form>
