@@ -1,16 +1,17 @@
 import { useState } from "react";
 import qs from "qs";
-import { Spin } from 'antd';
+import { Button, Col, Row, Space, Spin } from 'antd';
 import { Link } from "react-router-dom";
 import useRequest from "../utils/useRequest";
 import { Field } from "../utils/form";
 import { Table as ATable, Input as AInput } from 'antd';
+import { ActionLink } from "../utils/action-link";
 
 
 const NewsListPage = () => {
   const [page, setPage] = useState(1);
 
-  const { payload, loading } = useRequest(`/api/news?${qs.stringify({
+  const { payload, loading, reload } = useRequest(`/api/news?${qs.stringify({
     limit: 10,
     page,
   })}`)
@@ -19,8 +20,13 @@ const NewsListPage = () => {
     { title: 'id', dataIndex: 'id' },
     { title: 'title', dataIndex: 'title' },
     { title: 'body', dataIndex: 'body' },
-    { title: 'action', render: (value, record) => {
-        return <Link to={`/news/${record.id}`}>detail</Link>
+    { title: 'action', width: '20%', render: (value, record) => {
+      return (
+        <Space size="middle">
+          <Link to={`/news/${record.id}`}>detail</Link>
+          <ActionLink method="DELETE" url={`/api/news/${record.id}`} confirm="Are you sure?" then={reload}>delete</ActionLink>
+        </Space>
+      )
     }}
   ]
 
@@ -31,6 +37,11 @@ const NewsListPage = () => {
   return (
     <div>
       <h1>News</h1>
+      <div className="mb-2 grid justify-items-end">
+        <Link to="/news/new">
+          <Button type="primary">Create</Button>
+        </Link>
+      </div>
       <div>
         <Field label="Search" onKeyDown={(e) => e.keyCode === 13 ? setSearch(e.target.value) : ""} />
       </div>

@@ -1,20 +1,18 @@
-import { Spin, message } from 'antd';
+import { message } from 'antd';
 import { Form, Field, Button, ButtonGroup } from "../utils/form";
 import fetch from "../utils/fetch";
 
 import { useParams, useNavigate } from 'react-router-dom';
-import useRequest from "../utils/useRequest";
 
 
-const NewsShowPage = () => {
+const NewsNewPage = () => {
   const { id } = useParams();
-  const { payload, loading, reload } = useRequest(`/api/news/${id}`)
   const navigate = useNavigate()
 
   const onSubmit = async (values) => {
     try {
-      const res = await fetch(`/api/news/${id}`, {
-        method: 'PUT',
+      const res = await fetch(`/api/news`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -24,27 +22,22 @@ const NewsShowPage = () => {
       const json = await res.json()
 
       if (res.status > 400) {
-        // message.error(json.message);
+        message.error(json.message);
       } else {
         message.success('Success')
       }
-      console.log(json)
-      await reload()
+
+      navigate('/')
     } catch (e) {
       console.log(e)
       message.error('Unknown Error');
     }
   };
 
-
-  if (loading) {
-    return <div className="c-spinner"><Spin size="large"/></div>
-  }
-
   return (
     <div>
-      <h1>News Show</h1>
-      <Form initialValues={payload} onFinish={onSubmit}>
+      <h1>News Create</h1>
+      <Form initialValues={{}} onFinish={onSubmit}>
         <Field name="title" label="Title" />
         <Field name="body" label="Body" type="textarea" row={10} showCount maxLength={100} />
 
@@ -57,4 +50,4 @@ const NewsShowPage = () => {
   )
 }
 
-export default NewsShowPage;
+export default NewsNewPage;

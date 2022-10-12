@@ -11,8 +11,10 @@ module.exports = {
 
     // api routes
     'GET /api/news NewsController.index',
+    'POST /api/news NewsController.create',
     'GET /api/news/:id NewsController.show',
     'PUT /api/news/:id NewsController.update',
+    'DELETE /api/news/:id NewsController.delete',
   ],
   postMiddlewares: [],
 }

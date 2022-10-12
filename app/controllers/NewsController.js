@@ -1,3 +1,5 @@
+const _ = require('lodash')
+
 const database = {
   '1': {
     id: 1,
@@ -14,6 +16,17 @@ class NewsController {
       },
       items: Object.values(database),
     })
+  }
+
+  async create(req, res) {
+    const id = (_.last(Object.values(database))?.id || 0) + 1
+
+    database[id] = {
+      id,
+      ...req.body,
+    }
+
+    return res.status(201).json(database[id])
   }
 
   async show(req, res) {
@@ -34,6 +47,19 @@ class NewsController {
     database[id] = {...database[id], ...req.body}
 
     return res.json(database[id])
+  }
+
+  async delete(req, res) {
+    const id = req.params.id;
+    if (!database[id]) {
+      return res.sendStatus(404)
+    }
+
+    delete database[id]
+
+    return res.json({
+      success: true,
+    })
   }
 }
 

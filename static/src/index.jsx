@@ -1,4 +1,3 @@
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
@@ -7,15 +6,18 @@ import {
   Route,
 } from "react-router-dom";
 import MainLayout from './layouts/main';
-import HomePage from './pages/news-list';
+import NewsListPage from './pages/news-list';
+import NewsNewPage from './pages/news-new';
 import NewsShowPage from './pages/news-show';
+import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('app'));
 root.render(
   <HashRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
+          <Route index element={<NewsListPage />} />
+          <Route path="/news/new" element={<NewsNewPage />} />
           <Route path="/news/:id" element={<NewsShowPage />} />
         </Route>
       </Routes>

@@ -12,6 +12,7 @@ import {
   Table as ATable,
   Typography as ATypography,
   Select as ASelect,
+  Space as ASpace,
 } from "antd";
 import {
   CheckCircleTwoTone,
@@ -52,6 +53,11 @@ export const Field = ({ name, label, validations, type = "default", options = []
             })
           }
         </ASelect>
+      </AForm.Item>
+    ),
+    textarea: () => (
+      <AForm.Item label={label} name={name} rules={rules}>
+        <AInput.TextArea {...rest} />
       </AForm.Item>
     ),
     default: () => (
@@ -110,6 +116,11 @@ export const InlineField = ({
         </ASelect>
       </AForm.Item>
     ),
+    textarea: () => (
+      <AForm.Item name={name} rules={rules} style={style}>
+        <AInput.TextArea {...rest} />
+      </AForm.Item>
+    ),
     default: () => (
       <AForm.Item name={name} rules={rules} style={style}>
         <AInput {...rest} />
@@ -141,13 +152,21 @@ export const ArrayField = ({ name, children }) => {
   );
 };
 
-export const Button = ({ type = "default", submit = false, label = "Submit", onClick }) => {
+export const ButtonGroup = ({ children }) => {
   return (
     <AForm.Item>
-      <AButton type={type} htmlType={submit ? "submit" : "button"} onClick={onClick}>
-        { label }
-      </AButton>
+      <ASpace>
+        {children}
+      </ASpace>
     </AForm.Item>
+  )
+}
+
+export const Button = ({ type = "default", submit = false, label = "Submit", onClick }) => {
+  return (
+    <AButton type={type} htmlType={submit ? "submit" : "button"} onClick={onClick}>
+      { label }
+    </AButton>
   );
 };
 
