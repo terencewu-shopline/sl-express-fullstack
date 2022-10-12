@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "@shopline/sl-express": "ssh://git@github.com:shoplineapp/sl-express.git#master",
+    "@shopline/sl-express": "https://github.com/shoplineapp/sl-express.git#master",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
     "csurf": "^1.11.0",

@@ -694,9 +694,9 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@shopline/sl-express@ssh://git@github.com:shoplineapp/sl-express.git#master":
+"@shopline/sl-express@https://github.com/shoplineapp/sl-express.git#master":
   version "3.3.0"
-  resolved "ssh://git@github.com:shoplineapp/sl-express.git#ed61ffe279cbd61eb55af8ff05dbe378f7d368e0"
+  resolved "https://github.com/shoplineapp/sl-express.git#ed61ffe279cbd61eb55af8ff05dbe378f7d368e0"
   dependencies:
     bluebird "^3.7.2"
     deep-extend "^0.6.0"
