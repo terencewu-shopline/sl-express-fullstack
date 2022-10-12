@@ -1,0 +1,2 @@
+server: nodemon --exec sl-express start --ignore 'static/*'
+vite: vite
