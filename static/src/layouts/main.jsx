@@ -1,12 +1,15 @@
 import { Outlet } from "react-router-dom";
-import { Layout } from 'antd';
+import { Row, Col, Layout } from 'antd';
+
+import { useTranslation } from "react-i18next";
 import { Menu } from "../utils/menu";
+import { LanguageSwitch } from "../components/LanguageSwitch";
 const { Header, Content, Footer } = Layout;
 
 const links = [
   {
     path: '/',
-    label: 'Home',
+    label: 'general.home',
     exact: true,
   },
 ]
@@ -15,7 +18,17 @@ const MainLayout = () => {
   return (
     <Layout>
       <Header>
-        <Menu links={links} />
+        <Row>
+          <Col flex="1 1 0%">
+            <Menu links={links} />
+          </Col>
+          <Col>
+            <LanguageSwitch languages={[
+              { key: 'en', label: 'EN' },
+              { key: 'zh-hant', label: '繁中' },
+            ]} />
+          </Col>
+        </Row>
       </Header>
       <Content className="main-layout">
         <Outlet />

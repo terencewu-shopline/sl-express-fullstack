@@ -4,9 +4,11 @@ import { fetch } from "../utils/fetch";
 
 import { useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
+import { useTranslation } from "react-i18next";
 
 const NewsNewPage = () => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const createNews = useRequest(
     fetch('/api/news', {
@@ -31,14 +33,14 @@ const NewsNewPage = () => {
 
   return (
     <div>
-      <h1>News Create</h1>
+      <h1>{t('news.news_new')}</h1>
       <Form initialValues={{}} onFinish={createNews.run}>
-        <Field name="title" label="Title" />
-        <Field name="body" label="Body" type="textarea" row={10} showCount maxLength={100} />
+        <Field name="title" label={t('news.title')} />
+        <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
 
         <ButtonGroup>
-          <Button type="primary" submit={true} loading={createNews.loading} />
-          <Button onClick={() => navigate('/')} label="Back" />
+          <Button type="primary" submit={true} loading={createNews.loading} label={t('general.submit')} />
+          <Button onClick={() => navigate('/')} label={t('general.back')} />
         </ButtonGroup>
       </Form>
     </div>

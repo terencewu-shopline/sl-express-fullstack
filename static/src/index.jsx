@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import _ from "./utils/i18n";
 import MainLayout from './layouts/main';
 import NewsListPage from './pages/news-list';
 import NewsNewPage from './pages/news-new';

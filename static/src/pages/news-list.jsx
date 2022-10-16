@@ -8,11 +8,13 @@ import { useRequest } from "ahooks";
 import { ActionLink } from "../utils/action-link";
 import { fetch } from "../utils/fetch";
 import { Loading } from "../components/Loading";
+import { useTranslation } from "react-i18next";
 
 
 const NewsListPage = () => {
   const PAGE_SIZE = 2;
   const [page, setPage] = useState(1);
+  const { t } = useTranslation();
 
   const { data, loading, refresh } = useRequest(
     fetch(`/api/news?${qs.stringify({
@@ -25,14 +27,14 @@ const NewsListPage = () => {
   );
 
   const columns = [
-    { title: 'id', dataIndex: 'id' },
-    { title: 'title', dataIndex: 'title' },
-    { title: 'body', dataIndex: 'body' },
-    { title: 'action', width: '20%', render: (value, record) => {
+    { title: t('news.id'), dataIndex: 'id' },
+    { title: t('news.title'), dataIndex: 'title' },
+    { title: t('news.body'), dataIndex: 'body' },
+    { title: t('general.actions'), width: '20%', render: (value, record) => {
       return (
         <Space size="middle">
-          <Link to={`/news/${record.id}`}>detail</Link>
-          <ActionLink method="DELETE" url={`/api/news/${record.id}`} confirm="Are you sure?" onSuccess={refresh}>delete</ActionLink>
+          <Link to={`/news/${record.id}`}>{t('general.detail')}</Link>
+          <ActionLink method="DELETE" url={`/api/news/${record.id}`} confirm={t('general.are_your_sure_?')} onSuccess={refresh}>{t('general.delete')}</ActionLink>
         </Space>
       )
     }}
@@ -44,14 +46,14 @@ const NewsListPage = () => {
 
   return (
     <div>
-      <h1>News</h1>
+      <h1>{t('news.news')}</h1>
       <div className="mb-2 grid justify-items-end">
         <Link to="/news/new">
-          <Button type="primary">Create</Button>
+          <Button type="primary">{t('general.create')}</Button>
         </Link>
       </div>
       <div>
-        <Field label="Search" onKeyDown={(e) => e.keyCode === 13 ? setSearch(e.target.value) : ""} />
+        <Field label={t('general.search')} onKeyDown={(e) => e.keyCode === 13 ? setSearch(e.target.value) : ""} />
       </div>
       <ATable
         loading={loading}

@@ -1,0 +1,17 @@
+{
+  "general.create": "新建",
+  "general.search": "捜索",
+  "general.actions": "動作",
+  "general.detail": "詳情",
+  "general.delete": "刪除",
+  "general.submit": "提交",
+  "general.back": "返回",
+  "general.home": "首頁",
+  "general.are_your_sure_?": "確認?",
+  "news.news": "新聞",
+  "news.id": "ID",
+  "news.title": "標題",
+  "news.body": "內文",
+  "news.news_detail": "新聞詳情",
+  "news.news_new": "新建新聞"
+}

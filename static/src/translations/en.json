@@ -1,0 +1,17 @@
+{
+  "general.create": "Create",
+  "general.search": "Search",
+  "general.actions": "Actions",
+  "general.detail": "Detail",
+  "general.delete": "Delete",
+  "general.submit": "Submit",
+  "general.back": "Back",
+  "general.home": "Home",
+  "general.are_your_sure_?": "Are you sure?",
+  "news.news": "News",
+  "news.id": "ID",
+  "news.title": "Title",
+  "news.body": "Body",
+  "news.news_detail": "News Detail",
+  "news.news_new": "Create News"
+}

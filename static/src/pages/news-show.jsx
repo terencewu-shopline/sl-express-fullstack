@@ -5,12 +5,14 @@ import { fetch } from "../utils/fetch";
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 import { Loading } from '../components/Loading';
+import { useTranslation } from "react-i18next";
 
 
 const NewsShowPage = () => {
   const { id } = useParams();
   const { data, loading } = useRequest(fetch(`/api/news/${id}`))
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const updateNews = useRequest(
     fetch(`/api/news/${id}`, {
@@ -39,14 +41,14 @@ const NewsShowPage = () => {
 
   return (
     <div>
-      <h1>News Show</h1>
+      <h1>{t('news.news_detail')}</h1>
       <Form initialValues={data?.payload} onFinish={updateNews.run}>
-        <Field name="title" label="Title" />
-        <Field name="body" label="Body" type="textarea" row={10} showCount maxLength={100} />
+        <Field name="title" label={t('news.title')} />
+        <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
 
         <ButtonGroup>
-          <Button type="primary" submit={true} loading={updateNews.loading} />
-          <Button onClick={() => navigate('/')} label="Back" />
+          <Button type="primary" submit={true} loading={updateNews.loading} label={t('general.submit')}/>
+          <Button onClick={() => navigate('/')} label={t('general.back')} />
         </ButtonGroup>
       </Form>
     </div>
