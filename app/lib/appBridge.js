@@ -1,5 +1,5 @@
 const { DeveloperOAuth, AppBridge } = require('@shopline/shopline-sdk-node');
-const FileSystemTokenStore = require('@shopline/shopline-sdk-node/example-app-bridge/tokenStores/FileSystemTokenStore')
+const RedisTokenStore = require('./redisTokenStore')
 
 const developerOAuth = new DeveloperOAuth({
   endpoint: process.env.DEVELOPER_OAUTH_ENDPOINT,
@@ -13,7 +13,7 @@ const developerOAuth = new DeveloperOAuth({
 
 const appBridge = new AppBridge({
   developerOAuth,
-  tokenStore: new FileSystemTokenStore()
+  tokenStore: new RedisTokenStore()
 })
 
 module.exports = appBridge;
