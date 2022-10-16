@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "@shopline/shopline-sdk-node": "https://github.com/shoplineapp/shopline-sdk-node.git",
     "@shopline/sl-express": "https://github.com/shoplineapp/sl-express.git#master",
     "connect-redis": "^6.1.3",
     "cookie-parser": "^1.4.6",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@shopline/app-bridge-js": "https://github.com/shoplineapp/app-bridge-js.git",
     "@vitejs/plugin-react": "^1.3.2",
     "ahooks": "^3.7.1",
     "antd": "^4.21.0",

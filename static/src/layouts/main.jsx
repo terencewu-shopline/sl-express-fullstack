@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Row, Col, Layout } from 'antd';
 
-import { useTranslation } from "react-i18next";
 import { Menu } from "../utils/menu";
 import { LanguageSwitch } from "../components/LanguageSwitch";
 const { Header, Content, Footer } = Layout;

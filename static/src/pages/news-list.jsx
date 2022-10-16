@@ -34,6 +34,7 @@ const NewsListPage = () => {
     { title: t('news.id'), dataIndex: 'id' },
     { title: t('news.title'), dataIndex: 'title' },
     { title: t('news.body'), dataIndex: 'body' },
+    { title: t('news.created_by'), dataIndex: 'created_by' },
     { title: t('general.actions'), width: '20%', render: (value, record) => {
       return (
         <Space size="middle">

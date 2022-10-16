@@ -4,9 +4,7 @@ class HomeController {
   }
 
   async index(req, res) {
-    res.render('index', {
-      csrfToken: req.csrfToken(),
-    })
+    res.render('index')
   }
 }
 

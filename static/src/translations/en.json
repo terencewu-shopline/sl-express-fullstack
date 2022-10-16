@@ -12,6 +12,7 @@
   "news.id": "ID",
   "news.title": "Title",
   "news.body": "Body",
+  "news.created_by": "Created By",
   "news.news_detail": "News Detail",
   "news.news_new": "Create News"
 }

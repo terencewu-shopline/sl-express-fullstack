@@ -12,6 +12,7 @@
   "news.id": "ID",
   "news.title": "標題",
   "news.body": "內文",
+  "news.created_by": "作者",
   "news.news_detail": "新聞詳情",
   "news.news_new": "新建新聞"
 }

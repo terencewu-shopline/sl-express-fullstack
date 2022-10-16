@@ -1,10 +1,12 @@
 const _ = require('lodash')
+const OpenAPI = require('../lib/openApi')
 
 const database = {
   '1': {
     id: 1,
     title: 'First News',
     body: 'This is the first news.',
+    created_by: 'System',
   }
 }
 
@@ -40,9 +42,17 @@ class NewsController {
   async create(req, res) {
     const id = (_.last(Object.values(database))?.id || 0) + 1
 
+    const tokenInfo = await OpenAPI.withToken(res.locals.currentToken).request({
+      method: 'GET',
+      url: '/v1/token/info',
+    })
+
+    const staff = tokenInfo.staff;
+
     database[id] = {
       id,
       ...req.body,
+      created_by: staff.name,
     }
 
     return res.status(201).json(database[id])
