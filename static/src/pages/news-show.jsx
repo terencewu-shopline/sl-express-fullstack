@@ -1,9 +1,10 @@
-import { Spin, message } from 'antd';
+import { message } from 'antd';
 import { Form, Field, Button, ButtonGroup } from "../utils/form";
 import { fetch } from "../utils/fetch";
 
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
+import { Loading } from '../components/Loading';
 
 
 const NewsShowPage = () => {
@@ -33,7 +34,7 @@ const NewsShowPage = () => {
   )
 
   if (loading) {
-    return <div className="c-spinner"><Spin size="large"/></div>
+    return <Loading />
   }
 
   return (

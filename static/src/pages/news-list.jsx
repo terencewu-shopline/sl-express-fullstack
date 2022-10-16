@@ -1,22 +1,28 @@
 import { useState } from "react";
 import qs from "qs";
-import { Button, Col, Row, Space, Spin } from 'antd';
+import { Button, Col, Row, Space } from 'antd';
 import { Link } from "react-router-dom";
 import { Field } from "../utils/form";
 import { Table as ATable, Input as AInput } from 'antd';
 import { useRequest } from "ahooks";
 import { ActionLink } from "../utils/action-link";
 import { fetch } from "../utils/fetch";
+import { Loading } from "../components/Loading";
 
 
 const NewsListPage = () => {
   const PAGE_SIZE = 2;
   const [page, setPage] = useState(1);
 
-  const { data, loading, refresh } = useRequest(fetch(`/api/news?${qs.stringify({
-    limit: PAGE_SIZE,
-    page,
-  })}`));
+  const { data, loading, refresh } = useRequest(
+    fetch(`/api/news?${qs.stringify({
+      limit: PAGE_SIZE,
+      page,
+    })}`),
+    {
+      refreshDeps: [page],
+    }
+  );
 
   const columns = [
     { title: 'id', dataIndex: 'id' },
@@ -33,7 +39,7 @@ const NewsListPage = () => {
   ]
 
   if (loading) {
-    return <div className="c-spinner"><Spin size="large"/></div>
+    return <Loading />
   }
 
   return (

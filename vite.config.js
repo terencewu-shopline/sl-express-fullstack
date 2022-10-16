@@ -15,6 +15,7 @@ export default defineConfig({
       }
     }
   },
+  envDir: "static/",
   server: {
     port: 3001
   }
