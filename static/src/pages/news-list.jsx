@@ -2,20 +2,21 @@ import { useState } from "react";
 import qs from "qs";
 import { Button, Col, Row, Space, Spin } from 'antd';
 import { Link } from "react-router-dom";
-import useRequest from "../utils/useRequest";
 import { Field } from "../utils/form";
 import { Table as ATable, Input as AInput } from 'antd';
+import { useRequest } from "ahooks";
 import { ActionLink } from "../utils/action-link";
+import { fetch } from "../utils/fetch";
 
 
 const NewsListPage = () => {
   const PAGE_SIZE = 2;
   const [page, setPage] = useState(1);
 
-  const { payload, loading, reload } = useRequest(`/api/news?${qs.stringify({
+  const { data, loading, refresh } = useRequest(fetch(`/api/news?${qs.stringify({
     limit: PAGE_SIZE,
     page,
-  })}`)
+  })}`));
 
   const columns = [
     { title: 'id', dataIndex: 'id' },
@@ -25,7 +26,7 @@ const NewsListPage = () => {
       return (
         <Space size="middle">
           <Link to={`/news/${record.id}`}>detail</Link>
-          <ActionLink method="DELETE" url={`/api/news/${record.id}`} confirm="Are you sure?" then={reload}>delete</ActionLink>
+          <ActionLink method="DELETE" url={`/api/news/${record.id}`} confirm="Are you sure?" onSuccess={refresh}>delete</ActionLink>
         </Space>
       )
     }}
@@ -50,9 +51,9 @@ const NewsListPage = () => {
         loading={loading}
         rowKey="id"
         columns={columns}
-        dataSource={payload.items}
+        dataSource={data.payload?.items}
         pagination={{
-          total: payload?.pagination?.total,
+          total: data.payload?.pagination?.total,
           pageSize: PAGE_SIZE,
           showSizeChanger: false,
           current: page,
