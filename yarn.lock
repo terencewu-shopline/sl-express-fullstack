@@ -695,8 +695,8 @@
     picomatch "^2.2.2"
 
 "@shopline/app-bridge-js@https://github.com/shoplineapp/app-bridge-js.git":
-  version "1.0.0"
-  resolved "https://github.com/shoplineapp/app-bridge-js.git#a98eb47c1cc2b5fa11a46a6ce686654bbbb91854"
+  version "1.1.0"
+  resolved "https://github.com/shoplineapp/app-bridge-js.git#7dffa263ad2fa36f49bcdda87a9eb4f0e76690a5"
   dependencies:
     jwt-decode "^3.1.2"
     postmate "^1.5.2"

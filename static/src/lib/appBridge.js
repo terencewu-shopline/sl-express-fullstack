@@ -57,7 +57,9 @@ export const useAdminLanguage = () => {
   useEffect(() => {
     if (client) {
       client.getLanguage().then(lang => i18n.changeLanguage(lang))
-      client.subscribe('shopline:language-changed', ({ language }) => {
+
+      // return an unsubscribe function
+      return client.subscribe('shopline:language-changed', ({ language }) => {
         i18n.changeLanguage(language)
       })
     }
