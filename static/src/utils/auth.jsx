@@ -1,3 +1,8 @@
+/**
+ * inspired by
+ * Complete guide to authentication with React Router v6
+ * https://blog.logrocket.com/complete-guide-authentication-with-react-router-v6/
+ */
 import { useRequest } from "ahooks";
 import { createContext, useContext, useState, useMemo } from "react";
 import { Outlet } from "react-router-dom";
