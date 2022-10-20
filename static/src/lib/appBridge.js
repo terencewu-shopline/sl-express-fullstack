@@ -5,8 +5,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const client = AppBridge.init({
-  clientId: import.meta.env.VITE_APP_BRIDGE_CLIENT_ID,
-  authUrl: import.meta.env.VITE_APP_BRIDGE_AUTH_URL,
+  clientId: window.__PRELOADED_STATE__.client_id,
+  authUrl: `${window.location.origin}/oauth`,
 })
 
 export const appBridge = {
@@ -32,7 +32,7 @@ export const useAdminDeepLink = () => {
     if (client) {
       client.getCurrentUrl().then((url) => {
         const route = new URL(url).searchParams.get('route')
-        if (route != null) {
+        if (route != `${location.pathname}${location.search}${location.hash}`) {
           navigate(route)
         }
       })
@@ -41,7 +41,7 @@ export const useAdminDeepLink = () => {
 
   useEffect(() => {
     if (client) {
-      client.notifyAppRouteChanged(`${location.pathname}${location.search}`)
+      client.notifyAppRouteChanged(`${location.pathname}${location.search}${location.hash}`)
     }
   }, [client, location])
 
