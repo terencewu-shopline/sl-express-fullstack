@@ -31,9 +31,9 @@ export const useAdminDeepLink = () => {
   useEffect(() => {
     if (client) {
       client.getCurrentUrl().then((url) => {
-        const path = new URL(url).searchParams.get('path')
-        if (path != null) {
-          navigate(path)
+        const route = new URL(url).searchParams.get('route')
+        if (route != null) {
+          navigate(route)
         }
       })
     }
@@ -41,7 +41,7 @@ export const useAdminDeepLink = () => {
 
   useEffect(() => {
     if (client) {
-      client.routeChange(location.pathname, location.search)
+      client.notifyAppRouteChanged(`${location.pathname}${location.search}`)
     }
   }, [client, location])
 
@@ -57,9 +57,8 @@ export const useAdminLanguage = () => {
   useEffect(() => {
     if (client) {
       client.getLanguage().then(lang => i18n.changeLanguage(lang))
-
       // return an unsubscribe function
-      return client.subscribe('shopline:language-changed', ({ language }) => {
+      return client.onLanguageChanged(language => {
         i18n.changeLanguage(language)
       })
     }
