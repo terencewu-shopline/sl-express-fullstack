@@ -1,28 +1,32 @@
-import { useState } from "react";
 import qs from "qs";
-import { Button, Col, Row, Space } from 'antd';
-import { Link } from "react-router-dom";
+import { Button, Space } from 'antd';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Field } from "../utils/form";
-import { Table as ATable, Input as AInput } from 'antd';
+import { Table as ATable } from 'antd';
 import { useRequest } from "ahooks";
 import { ActionLink } from "../utils/action-link";
 import { fetch } from "../utils/fetch";
-import { Loading } from "../components/Loading";
 import { useTranslation } from "react-i18next";
 
 
 const NewsListPage = () => {
   const PAGE_SIZE = 2;
-  const [page, setPage] = useState(1);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const querystring = qs.parse(location.search, { ignoreQueryPrefix: true })
+  const page = parseInt(querystring.page) || 1
+  const search = querystring.search
+
   const { t } = useTranslation();
 
   const { data, loading, refresh } = useRequest(
     fetch(`/api/news?${qs.stringify({
       limit: PAGE_SIZE,
       page,
+      search,
     })}`),
     {
-      refreshDeps: [page],
+      refreshDeps: [page, search],
     }
   );
 
@@ -40,10 +44,6 @@ const NewsListPage = () => {
     }}
   ]
 
-  if (loading) {
-    return <Loading />
-  }
-
   return (
     <div>
       <h1>{t('news.news')}</h1>
@@ -53,19 +53,19 @@ const NewsListPage = () => {
         </Link>
       </div>
       <div>
-        <Field label={t('general.search')} onKeyDown={(e) => e.keyCode === 13 ? setSearch(e.target.value) : ""} />
+        <Field label={t('general.search')} onKeyDown={(e) => e.keyCode === 13 ? navigate({ search: `?${qs.stringify({...querystring, page: 1, search: e.target.value}) }`}) : ""} defaultValue={search} />
       </div>
       <ATable
         loading={loading}
         rowKey="id"
         columns={columns}
-        dataSource={data.payload?.items}
+        dataSource={data?.payload?.items}
         pagination={{
-          total: data.payload?.pagination?.total,
+          total: data?.payload?.pagination?.total,
           pageSize: PAGE_SIZE,
           showSizeChanger: false,
           current: page,
-          onChange: (page) => setPage(page)
+          onChange: (page) => navigate({ search: `?${qs.stringify({...querystring, page}) }`})
         }}
       />
     </div>

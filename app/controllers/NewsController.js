@@ -8,14 +8,25 @@ const database = {
   }
 }
 
+const SEARCHABLE_FIELDS = ['title', 'body']
+
 class NewsController {
   async index(req, res) {
-    const page = req.query.page || 1
+    const page = parseInt(req.query.page) || 1
     const limit = req.query.limit || 10
     const skip = (page - 1) * limit
+    const search = req.query.search || ''
 
-    const items = Object.values(database).slice(skip, skip + limit)
-    const total = Object.keys(database).length
+    let results = Object.values(database)
+    let items = []
+    let total = 0
+
+    if (!_.isEmpty(search)) {
+      results = results.filter(rec => Object.values(_.pick(rec, SEARCHABLE_FIELDS)).some(value => value.indexOf(search) >= 0))
+    }
+
+    items = results.slice(skip, skip + limit)
+    total = results.length
 
     return res.json({
       pagination: {
