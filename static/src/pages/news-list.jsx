@@ -7,6 +7,8 @@ import { useRequest } from "ahooks";
 import { ActionLink } from "../utils/action-link";
 import { fetch } from "../utils/fetch";
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from "../utils/page-title";
+import { useEffect } from "react";
 
 
 const NewsListPage = () => {
@@ -18,6 +20,7 @@ const NewsListPage = () => {
   const search = querystring.search
 
   const { t } = useTranslation();
+  usePageTitle(t('news.news'));
 
   const { data, loading, refresh } = useRequest(
     fetch(`/api/news?${qs.stringify({

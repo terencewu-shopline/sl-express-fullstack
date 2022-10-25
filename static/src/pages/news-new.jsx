@@ -5,10 +5,12 @@ import { fetch } from "../utils/fetch";
 import { useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from '../utils/page-title';
 
 const NewsNewPage = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
+  usePageTitle(t('news.news_new'))
 
   const createNews = useRequest(
     fetch('/api/news', {

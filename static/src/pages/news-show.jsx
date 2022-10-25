@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 import { Loading } from '../components/Loading';
 import { useTranslation } from "react-i18next";
+import { usePageTitle } from '../utils/page-title';
 
 
 const NewsShowPage = () => {
@@ -13,6 +14,7 @@ const NewsShowPage = () => {
   const { data, loading } = useRequest(fetch(`/api/news/${id}`))
   const navigate = useNavigate()
   const { t } = useTranslation()
+  usePageTitle(t('news.news_detail'))
 
   const updateNews = useRequest(
     fetch(`/api/news/${id}`, {
