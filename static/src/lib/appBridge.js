@@ -4,7 +4,7 @@ import { useRequest } from "ahooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { usePageTitle } from "../utils/page-title";
-
+import { showConfirmLeaveModal } from "../components/ConfirmLeaveModal";
 
 const client = AppBridge.init({
   clientId: window.__PRELOADED_STATE__.client_id,
@@ -86,11 +86,46 @@ export const useAdminPageTitle = () => {
   }
 }
 
+export const useAdminRouteChange = () => {
+  const { client, loading } = useAppBridge();
+  const { t } = useTranslation();
+
+  const onModalOk = () => {
+    client?.routeChangeContinue();
+  }
+
+  const onModalCancel = () => {
+    client?.routeChangeCancel();
+  }
+  
+  useEffect(() => {
+    if (client) {
+      const unsubscribe = client.onRouteChange((e) => {
+        e.preventDefault();
+
+        showConfirmLeaveModal({
+          t,
+          onOk: onModalOk,
+          onCancel: onModalCancel,
+        })
+      });
+
+      return unsubscribe;
+    }
+  }, [client]);
+
+  return {
+    loading,
+    client,
+  }
+}
+
 export const useAdminFeatures = () => {
   const features = [
     useAdminDeepLink(),
     useAdminLanguage(),
     useAdminPageTitle(),
+    useAdminRouteChange()
   ]
 
   return {

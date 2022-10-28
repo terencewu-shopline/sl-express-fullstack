@@ -14,5 +14,9 @@
   "news.body": "Body",
   "news.created_by": "Created By",
   "news.news_detail": "News Detail",
-  "news.news_new": "Create News"
+  "news.news_new": "Create News",
+  "confirm_leave_modal.title": "Changes that you made have not been saved",
+  "confirm_leave_modal.description": "You will lose your progress if you leave site now, please save before leaving.",
+  "confirm_leave_modal.cancel": "cancel",
+  "confirm_leave_modal.leave": "leave"
 }
