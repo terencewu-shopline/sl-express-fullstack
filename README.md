@@ -21,7 +21,7 @@ git checkout <branch_name>
 yarn
 cp .env.example .env
 <fill in missing ENV in .env>
-docker run -d redis -p 6379:6379
+docker run -d -p 6379:6379 redis
 
 yarn dev
 ```
