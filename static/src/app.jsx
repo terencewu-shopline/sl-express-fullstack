@@ -8,11 +8,19 @@ import NewsListPage from './pages/news-list';
 import NewsNewPage from './pages/news-new';
 import NewsShowPage from './pages/news-show';
 import Error401Page from './pages/error-401';
-import { useAdminFeatures } from "./lib/appBridge";
+import { AppBridgeContext } from "./lib/appBridge";
 import { Loading } from "./components/Loading";
+import { useContext } from "react";
+import { useAdminDeepLink } from "./lib/appBridge/useAdminDeepLink";
+import { useAdminLanguage } from "./lib/appBridge/useAdminLanguage";
+import { useAdminPageTitle } from "./lib/appBridge/useAdminPageTitle";
 
 export const App = () => {
-  const { loading } = useAdminFeatures()
+  const { client, loading } = useContext(AppBridgeContext);
+
+  useAdminDeepLink(client);
+  useAdminLanguage(client);
+  useAdminPageTitle(client);
 
   if (loading) {
     return <Loading />

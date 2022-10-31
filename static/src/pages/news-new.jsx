@@ -6,10 +6,20 @@ import { useNavigate } from 'react-router-dom';
 import { useRequest } from 'ahooks';
 import { useTranslation } from "react-i18next";
 import { usePageTitle } from '../utils/page-title';
+import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
+import { some, isEmpty } from 'lodash';
+import { useFormValuesChange } from '../hooks/useFormValuesChange';
 
 const NewsNewPage = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
+
+  const { isModalOpen, setIsDirty, continueModal, cancelModal } = useFormValuesChange();
+
+  const onFormValuesChanged = (changedValues, values) => {
+    const changed = some(values, val => !isEmpty(val));
+    setIsDirty(changed);
+  };
 
   usePageTitle(t('news.news_new'));
 
@@ -35,18 +45,26 @@ const NewsNewPage = () => {
   )
 
   return (
-    <div>
-      <h1>{t('news.news_new')}</h1>
-      <Form initialValues={{}} onFinish={createNews.run}>
-        <Field name="title" label={t('news.title')} />
-        <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
+    <>
+      <div>
+        <h1>{t('news.news_new')}</h1>
+        <Form initialValues={{}} onFinish={createNews.run} onValuesChange={onFormValuesChanged}>
+          <Field name="title" label={t('news.title')} />
+          <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
 
-        <ButtonGroup>
-          <Button type="primary" submit={true} loading={createNews.loading} label={t('general.submit')} />
-          <Button onClick={() => navigate('/')} label={t('general.back')} />
-        </ButtonGroup>
-      </Form>
-    </div>
+          <ButtonGroup>
+            <Button type="primary" submit={true} loading={createNews.loading} label={t('general.submit')} />
+            <Button onClick={() => navigate('/')} label={t('general.back')} />
+          </ButtonGroup>
+        </Form>
+      </div>
+      <ConfirmLeaveModal 
+        t={t}
+        isModalOpen={isModalOpen}
+        onOk={continueModal}
+        onCancel={cancelModal}
+      />
+    </>
   )
 }
 

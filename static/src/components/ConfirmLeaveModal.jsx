@@ -1,16 +1,16 @@
-import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 
-const { confirm } = Modal;
-
-export const showConfirmLeaveModal = ({t, onOk, onCancel}) => {
-  confirm({
-    title: t('confirm_leave_modal.title'),
-    icon: <ExclamationCircleOutlined />,
-    content: t('confirm_leave_modal.description'),
-    cancelText: t('confirm_leave_modal.cancel'),
-    okText: t('confirm_leave_modal.leave'),
-    onOk: onOk,
-    onCancel: onCancel,
-  })
+export const ConfirmLeaveModal = ({t, onOk, onCancel, isModalOpen}) => {
+  return (
+    <Modal 
+      title={t('confirm_leave_modal.title')} 
+      open={isModalOpen} 
+      onOk={onOk} 
+      onCancel={onCancel}
+      okText={t('confirm_leave_modal.leave')}
+      cancelText={t('confirm_leave_modal.cancel')}
+    >
+      <p>{t('confirm_leave_modal.description')}</p>
+    </Modal>
+  )
 }

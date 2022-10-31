@@ -7,6 +7,9 @@ import { useRequest } from 'ahooks';
 import { Loading } from '../components/Loading';
 import { useTranslation } from "react-i18next";
 import { usePageTitle } from '../utils/page-title';
+import { useFormValuesChange } from '../hooks/useFormValuesChange';
+import { isEqual, omit } from 'lodash';
+import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
 
 
 const NewsShowPage = () => {
@@ -38,23 +41,40 @@ const NewsShowPage = () => {
     }
   )
 
+  const { isModalOpen, setIsDirty, continueModal, cancelModal } = useFormValuesChange();
+  const onFormValuesChanged = (changedValues, values) => {
+    if (!data || !data.payload) return;
+    
+    const changed = !isEqual(omit(data.payload, ['id', 'created_by']), values);
+    setIsDirty(changed);
+  };
+
   if (loading) {
     return <Loading />
   }
 
   return (
-    <div>
-      <h1>{t('news.news_detail')}</h1>
-      <Form initialValues={data?.payload} onFinish={updateNews.run}>
-        <Field name="title" label={t('news.title')} />
-        <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
+    <>
+      <div>
+        <h1>{t('news.news_detail')}</h1>
+        <Form initialValues={data?.payload} onFinish={updateNews.run} onValuesChange={onFormValuesChanged}>
+          <Field name="title" label={t('news.title')} />
+          <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
 
-        <ButtonGroup>
-          <Button type="primary" submit={true} loading={updateNews.loading} label={t('general.submit')}/>
-          <Button onClick={() => navigate('/')} label={t('general.back')} />
-        </ButtonGroup>
-      </Form>
-    </div>
+          <ButtonGroup>
+            <Button type="primary" submit={true} loading={updateNews.loading} label={t('general.submit')}/>
+            <Button onClick={() => navigate('/')} label={t('general.back')} />
+          </ButtonGroup>
+        </Form>
+      </div>
+
+      <ConfirmLeaveModal 
+        t={t}
+        isModalOpen={isModalOpen}
+        onOk={continueModal}
+        onCancel={cancelModal}
+      />
+    </>
   )
 }
 
