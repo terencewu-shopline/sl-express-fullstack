@@ -7,7 +7,8 @@ import { useRequest } from 'ahooks';
 import { Loading } from '../components/Loading';
 import { useTranslation } from "react-i18next";
 import { usePageTitle } from '../utils/page-title';
-import { useFormValuesChange } from '../hooks/useFormValuesChange';
+import { useAdminRouteChange } from '../lib/appBridge/useAdminRouteChange';
+import { useState } from 'react';
 import { isEqual, omit } from 'lodash';
 import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
 
@@ -17,6 +18,27 @@ const NewsShowPage = () => {
   const { data, loading } = useRequest(fetch(`/api/news/${id}`))
   const navigate = useNavigate()
   const { t } = useTranslation()
+
+  const [isDirty, setIsDirty] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { retryRouteChange } = useAdminRouteChange((from, to) => {
+    setIsModalOpen(true);
+  }, isDirty);
+
+  const cancelModal = () => setIsModalOpen(false);
+
+  const continueModal = () => {
+    setIsModalOpen(true);
+    retryRouteChange();
+  }
+
+  const onFormValuesChanged = (changedValues, values) => {
+    if (!data || !data.payload) return;
+    
+    const changed = !isEqual(omit(data.payload, ['id', 'created_by']), values);
+    setIsDirty(changed);
+  };
 
   usePageTitle(t('news.news_detail'));
   
@@ -40,14 +62,6 @@ const NewsShowPage = () => {
       }
     }
   )
-
-  const { isModalOpen, setIsDirty, continueModal, cancelModal } = useFormValuesChange();
-  const onFormValuesChanged = (changedValues, values) => {
-    if (!data || !data.payload) return;
-    
-    const changed = !isEqual(omit(data.payload, ['id', 'created_by']), values);
-    setIsDirty(changed);
-  };
 
   if (loading) {
     return <Loading />

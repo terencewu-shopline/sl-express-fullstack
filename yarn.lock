@@ -694,9 +694,9 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@shopline/app-bridge-js@https://github.com/shoplineapp/app-bridge-js.git#c87729f5f581f40c11714d5324ca9e0e37e181eb":
-  version "1.2.2"
-  resolved "https://github.com/shoplineapp/app-bridge-js.git#c87729f5f581f40c11714d5324ca9e0e37e181eb"
+"@shopline/app-bridge-js@https://github.com/shoplineapp/app-bridge-js.git#ce236d8e5163c9f3409beebf3275f8291f7a5135":
+  version "1.2.3"
+  resolved "https://github.com/shoplineapp/app-bridge-js.git#ce236d8e5163c9f3409beebf3275f8291f7a5135"
   dependencies:
     jwt-decode "^3.1.2"
     postmate "^1.5.2"

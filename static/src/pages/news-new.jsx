@@ -8,16 +8,31 @@ import { useTranslation } from "react-i18next";
 import { usePageTitle } from '../utils/page-title';
 import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
 import { some, isEmpty } from 'lodash';
-import { useFormValuesChange } from '../hooks/useFormValuesChange';
+import { useState } from 'react';
+import { useAdminRouteChange } from '../lib/appBridge/useAdminRouteChange';
+
 
 const NewsNewPage = () => {
   const navigate = useNavigate()
-  const { t } = useTranslation()
 
-  const { isModalOpen, setIsDirty, continueModal, cancelModal } = useFormValuesChange();
+  const { t } = useTranslation()
+  const [isDirty, setIsDirty] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { retryRouteChange } = useAdminRouteChange((from, to) => {
+    setIsModalOpen(true);
+  }, isDirty);
+
+  const cancelModal = () => setIsModalOpen(false);
+
+  const continueModal = () => {
+    setIsModalOpen(true);
+    retryRouteChange();
+  }
 
   const onFormValuesChanged = (changedValues, values) => {
     const changed = some(values, val => !isEmpty(val));
+
     setIsDirty(changed);
   };
 
@@ -47,7 +62,7 @@ const NewsNewPage = () => {
   return (
     <>
       <div>
-        <h1>{t('news.news_new')}</h1>
+        <h1>{t('news.news_new')}123</h1>
         <Form initialValues={{}} onFinish={createNews.run} onValuesChange={onFormValuesChanged}>
           <Field name="title" label={t('news.title')} />
           <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />

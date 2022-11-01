@@ -1,21 +1,18 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppBridgeContext } from "../appBridge";
 
-export const useAdminRouteChange = ({ client, onRouteChange }) => {
-  const onModalOk = () => {
-    client?.routeChangeContinue();
-  }
+export const useAdminRouteChange = (callback, when) => {
+  const { client } = useContext(AppBridgeContext);
 
-  const onModalCancel = () => {
-    client?.routeChangeCancel();
-  }
-  
   useEffect(() => {
-    return client?.onRouteChange(onRouteChange);
-  }, [client, onRouteChange]);
+    if (!when) return;
+  
+    const unsubscribe = client?.onRouteChanged(callback);
+  
+    return () => unsubscribe();
+  }, [when]);
 
   return {
-    client,
-    onModalOk,
-    onModalCancel,
+    retryRouteChange: () => client?.retryRouteChange(),
   }
 }
