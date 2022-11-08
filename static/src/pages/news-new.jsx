@@ -62,7 +62,7 @@ const NewsNewPage = () => {
   return (
     <>
       <div>
-        <h1>{t('news.news_new')}123</h1>
+        <h1>{t('news.news_new')}</h1>
         <Form initialValues={{}} onFinish={createNews.run} onValuesChange={onFormValuesChanged}>
           <Field name="title" label={t('news.title')} />
           <Field name="body" label={t('news.body')} type="textarea" row={10} showCount maxLength={100} />
