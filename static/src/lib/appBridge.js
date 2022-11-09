@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { useRequest } from "ahooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { usePageTitle } from "../utils/page-title";
+
 
 const client = AppBridge.init({
   clientId: window.__PRELOADED_STATE__.client_id,
@@ -69,10 +71,26 @@ export const useAdminLanguage = () => {
   }
 }
 
+export const useAdminPageTitle = () => {
+  const {client, loading} = useAppBridge();
+  const { title } = usePageTitle();
+
+  useEffect(() => {
+    if (client) {
+      client.changePageTitle(title);
+    }
+  }, [client, title]);
+
+  return {
+    loading,
+  }
+}
+
 export const useAdminFeatures = () => {
   const features = [
     useAdminDeepLink(),
     useAdminLanguage(),
+    useAdminPageTitle(),
   ]
 
   return {
