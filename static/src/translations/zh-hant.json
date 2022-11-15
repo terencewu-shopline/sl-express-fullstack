@@ -14,5 +14,9 @@
   "news.body": "內文",
   "news.created_by": "作者",
   "news.news_detail": "新聞詳情",
-  "news.news_new": "新建新聞"
+  "news.news_new": "新建新聞",
+  "confirm_leave_modal.title": "尚未儲存變更",
+  "confirm_leave_modal.description": "如果直接離開，未儲存的變更將會失去，建議閣下儲存後再離開。",
+  "confirm_leave_modal.cancel": "取消",
+  "confirm_leave_modal.leave": "離開"
 }

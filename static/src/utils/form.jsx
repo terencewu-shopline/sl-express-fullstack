@@ -170,9 +170,9 @@ export const Button = ({ type = "default", submit = false, label = "Submit", onC
   );
 };
 
-export const Form = ({ initialValues, children, onFinish }) => {
+export const Form = ({ initialValues, children, onFinish, onValuesChange }) => {
   return (
-    <AForm initialValues={initialValues} onFinish={onFinish}>
+    <AForm initialValues={initialValues} onFinish={onFinish} onValuesChange={onValuesChange}>
       {children}
     </AForm>
   );
