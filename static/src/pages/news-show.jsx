@@ -7,7 +7,7 @@ import { useRequest } from 'ahooks';
 import { Loading } from '../components/Loading';
 import { useTranslation } from "react-i18next";
 import { usePageTitle } from '../utils/page-title';
-import { useAdminRouteChange } from '../lib/appBridge/useAdminRouteChange';
+import { useAdminRouteInterceptor } from '../lib/appBridge/useAdminRouteInterceptor';
 import { useState } from 'react';
 import { isEqual, omit } from 'lodash';
 import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
@@ -22,7 +22,7 @@ const NewsShowPage = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { retryRouteChange } = useAdminRouteChange((from, to) => {
+  const { retryRouteChange } = useAdminRouteInterceptor((from, to) => {
     setIsModalOpen(true);
   }, isDirty);
 
