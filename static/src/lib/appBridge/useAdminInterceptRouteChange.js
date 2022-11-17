@@ -1,15 +1,15 @@
 import { useContext, useEffect } from "react";
 import { AppBridgeContext } from "../appBridge";
 
-export const useAdminRouteChange = (callback, when) => {
+export const useAdminInterceptRouteChange = (callback, when) => {
   const { client } = useContext(AppBridgeContext);
 
   useEffect(() => {
     if (!when) return;
   
-    const unsubscribe = client?.onRouteChanged(callback);
+    const stopInterception = client?.interceptRouteChange(callback);
   
-    return () => unsubscribe();
+    return () => stopInterception();
   }, [when]);
 
   return {
