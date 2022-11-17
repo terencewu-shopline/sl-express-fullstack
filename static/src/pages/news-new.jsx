@@ -9,7 +9,7 @@ import { usePageTitle } from '../utils/page-title';
 import { ConfirmLeaveModal } from '../components/ConfirmLeaveModal';
 import { some, isEmpty } from 'lodash';
 import { useState } from 'react';
-import { useAdminRouteChange } from '../lib/appBridge/useAdminRouteChange';
+import { useAdminRouteInterceptor } from '../lib/appBridge/useAdminRouteInterceptor';
 
 
 const NewsNewPage = () => {
@@ -19,7 +19,7 @@ const NewsNewPage = () => {
   const [isDirty, setIsDirty] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { retryRouteChange } = useAdminRouteChange((from, to) => {
+  const { retryRouteChange } = useAdminRouteInterceptor((from, to) => {
     setIsModalOpen(true);
   }, isDirty);
 
