@@ -10,7 +10,7 @@ export const useAdminDeepLink = (client) => {
       client.getCurrentUrl().then((url) => {
         const route = new URL(url).searchParams.get('route')
         if (route != `${location.pathname}${location.search}${location.hash}`) {
-          navigate(route)
+          navigate(route, { replace: true })
         }
       })
     }
