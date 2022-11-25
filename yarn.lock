@@ -702,8 +702,8 @@
     postmate "^1.5.2"
 
 "@shopline/shopline-sdk-node@https://github.com/shoplineapp/shopline-sdk-node.git":
-  version "1.1.0"
-  resolved "https://github.com/shoplineapp/shopline-sdk-node.git#4fd5e83a39c8ebf1658b8484765cbf7bff24dc12"
+  version "1.1.1"
+  resolved "https://github.com/shoplineapp/shopline-sdk-node.git#4d40efda3a33609ed770a9ed76adfdbb686ba746"
   dependencies:
     axios "^0.19.2"
     jsonwebtoken "^8.5.1"
