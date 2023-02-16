@@ -1,9 +1,23 @@
+const _ = require('lodash');
 const session = require('express-session');
-const RedisStore = require('connect-redis')(session);
+
+const redisStore = _.memoize(() => {
+  const RedisStore = require('connect-redis')(session);
+  return new RedisStore({ client: redisSession })
+})
+
+const cycliDBSessionStore = _.memoize(() => {
+  const { CyclicSessionStore } = require("@cyclic.sh/session-store");
+  return new CyclicSessionStore({
+    table: {
+      name: process.env.CYCLIC_DB,
+    }
+  });
+})
 
 module.exports = (req, res, next) => {
   return session({
-    store: new RedisStore({ client: redisSession }),
+    store: process.env.RUNTIME === 'cyclic' ? cycliDBSessionStore() : redisStore(),
     secret: process.env.SESSION_REDIS_SECRET,
     resave: false,
     saveUninitialized: true,

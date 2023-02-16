@@ -4,6 +4,6 @@ module.exports = {
     'logger',
     'ejs',
     'static',
-    'redisSession',
+    ...(process.env.RUNTIME === 'cyclic' ? [] : ['redisSession']),
   ]
 };

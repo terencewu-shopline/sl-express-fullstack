@@ -13,6 +13,8 @@
     "vite:preview": "vite preview"
   },
   "dependencies": {
+    "@cyclic.sh/dynamodb": "^0.0.33",
+    "@cyclic.sh/session-store": "https://github.com/terenceccwu/cyclic-session-store#fix/missing-default-callback",
     "@hapi/joi": "^17.1.1",
     "@shopline/shopline-sdk-node": "https://github.com/shoplineapp/shopline-sdk-node.git",
     "@shopline/sl-express": "https://github.com/shoplineapp/sl-express.git#master",

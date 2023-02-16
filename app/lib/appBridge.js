@@ -1,5 +1,17 @@
+const _ = require('lodash')
 const { DeveloperOAuth, AppBridge } = require('@shopline/shopline-sdk-node');
-const RedisTokenStore = require('./redisTokenStore')
+
+
+const redisTokenStore = _.memoize(() => {
+  const RedisTokenStore = require('./redisTokenStore')
+  return new RedisTokenStore()
+})
+
+const cyclicTokenStore = _.memoize(() => {
+  const CyclicDBTokenStore = require('./cyclicDBTokenStore')
+  return new CyclicDBTokenStore()
+})
+
 
 const developerOAuth = new DeveloperOAuth({
   endpoint: process.env.DEVELOPER_OAUTH_ENDPOINT,
@@ -13,7 +25,7 @@ const developerOAuth = new DeveloperOAuth({
 
 const appBridge = new AppBridge({
   developerOAuth,
-  tokenStore: new RedisTokenStore()
+  tokenStore: process.env.RUNTIME == 'cyclic' ? cyclicTokenStore() : redisTokenStore()
 })
 
 module.exports = appBridge;
