@@ -1,5 +1,5 @@
 import qs from "qs";
-import { Button, Space } from 'antd';
+import { Button, Space, message } from 'antd';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Field } from "../utils/form";
 import { Table as ATable } from 'antd';
@@ -30,6 +30,15 @@ const NewsListPage = () => {
     })}`),
     {
       refreshDeps: [page, search],
+      onError: (e) => {
+        console.error(e);
+        
+        if (e?.code === "SESSION_EXPIRED") {
+          message.error("Session has expired. Please refresh the page.");
+        } else {
+          message.error('Unknown Error');
+        }
+      }
     }
   );
 

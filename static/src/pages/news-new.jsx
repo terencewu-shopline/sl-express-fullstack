@@ -53,8 +53,13 @@ const NewsNewPage = () => {
         navigate('/')
       },
       onError: (e) => {
-        console.log(e)
-        message.error('Unknown Error');
+        console.error(e);
+
+        if (e?.code === "SESSION_EXPIRED") {
+          message.error("Session has expired. Please refresh the page.");
+        } else {
+          message.error('Unknown Error');
+        }
       }
     }
   )
