@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^4.7.0",
-    "@shopline/app-bridge-js": "https://github.com/shoplineapp/app-bridge-js.git#v1.3.0",
+    "@shopline/app-bridge-js": "https://github.com/shoplineapp/app-bridge-js.git#792ea0a269f44e63d160d6c3b69ed20f6330edb1",
     "@vitejs/plugin-react": "^1.3.2",
     "ahooks": "^3.7.1",
     "antd": "^4.21.0",
